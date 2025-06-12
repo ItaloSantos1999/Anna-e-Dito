@@ -39,22 +39,13 @@
   <button onclick="respostaSim()" style="padding: 10px 20px; margin: 10px; font-size: 16px;">Sim</button>
   <button onclick="respostaNao()" style="padding: 10px 20px; margin: 10px; font-size: 16px;">Não</button>
   
-  <div id="resposta" style="margin-top: 20px; font-size: 80px;"></div>
+  <div id="resposta" style="margin-top: 20px; font-size: 120px;"></div>
 </div>
 
-<!-- Música: Those Eyes (link do arquivo de áudio) -->
 <audio id="musica" src="https://italosantos1999.github.io/Anna-e-Dito/thoseeyes.mp3"></audio>
 
 <script>
-  function respostaSim() {
-    // Toca a música
-    const musica = document.getElementById("musica");
-    musica.play();
-
-    // Remove resposta anterior
-    document.getElementById("resposta").innerHTML = "";
-
-    // Cria os corações caindo
+  function criarCoracoes(tipo) {
     const container = document.createElement("div");
     container.style.position = "fixed";
     container.style.top = 0;
@@ -66,7 +57,7 @@
 
     for (let i = 0; i < 30; i++) {
       const heart = document.createElement("div");
-      heart.textContent = "❤️";
+      heart.textContent = tipo === 'amor' ? "❤️" : "💔";
       heart.style.position = "absolute";
       heart.style.fontSize = "30px";
       heart.style.animation = "cair 3s linear forwards";
@@ -76,14 +67,27 @@
     }
   }
 
+  function respostaSim() {
+    document.getElementById("resposta").innerHTML = "";
+    document.body.classList.remove("tremor");
+    criarCoracoes('amor');
+
+    const musica = document.getElementById("musica");
+    musica.play();
+  }
+
   function respostaNao() {
-    // Pausa a música se estiver tocando
+    document.getElementById("resposta").innerHTML = "💔";
+    document.body.classList.add("tremor");
+    criarCoracoes('partido');
+
     const musica = document.getElementById("musica");
     musica.pause();
     musica.currentTime = 0;
 
-    // Mostra coração partido gigante
-    document.getElementById("resposta").innerHTML = "💔";
+    setTimeout(() => {
+      document.body.classList.remove("tremor");
+    }, 1000);
   }
 </script>
 
@@ -94,4 +98,18 @@
     opacity: 0;
   }
 }
+
+@keyframes shake {
+  0% { transform: translate(0px, 0px); }
+  20% { transform: translate(-5px, 0px); }
+  40% { transform: translate(5px, 0px); }
+  60% { transform: translate(-5px, 0px); }
+  80% { transform: translate(5px, 0px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+.tremor {
+  animation: shake 0.1s linear 10;
+}
 </style>
+
