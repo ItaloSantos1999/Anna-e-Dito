@@ -34,15 +34,27 @@
   <p>"Contando os dias para o 'felizes para sempre'."</p>
   <p>"Onde há amor, há tudo."</p>
     <div style="text-align: center; margin-top: 50px;">
+  <div style="text-align: center; margin-top: 50px;">
   <h2 style="color: white;">Você me ama?</h2>
   <button onclick="respostaSim()" style="padding: 10px 20px; margin: 10px; font-size: 16px;">Sim</button>
   <button onclick="respostaNao()" style="padding: 10px 20px; margin: 10px; font-size: 16px;">Não</button>
   
-  <div id="resposta" style="margin-top: 20px; font-size: 40px;"></div>
+  <div id="resposta" style="margin-top: 20px; font-size: 80px;"></div>
 </div>
+
+<!-- Música: Those Eyes (link do arquivo de áudio) -->
+<audio id="musica" src="https://italosantos1999.github.io/Anna-e-Dito/thoseeyes.mp3"></audio>
 
 <script>
   function respostaSim() {
+    // Toca a música
+    const musica = document.getElementById("musica");
+    musica.play();
+
+    // Remove resposta anterior
+    document.getElementById("resposta").innerHTML = "";
+
+    // Cria os corações caindo
     const container = document.createElement("div");
     container.style.position = "fixed";
     container.style.top = 0;
@@ -62,11 +74,15 @@
       heart.style.top = "-50px";
       container.appendChild(heart);
     }
-
-    document.getElementById("resposta").innerHTML = "";
   }
 
   function respostaNao() {
+    // Pausa a música se estiver tocando
+    const musica = document.getElementById("musica");
+    musica.pause();
+    musica.currentTime = 0;
+
+    // Mostra coração partido gigante
     document.getElementById("resposta").innerHTML = "💔";
   }
 </script>
@@ -79,9 +95,3 @@
   }
 }
 </style>
-
-</div>
-
-  <p>Site em construção com muito amor 💖</p>
-</body>
-</html>
