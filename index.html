@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<audio id="musica" src="thoseeyes.mp3" autoplay loop></audio>
+<audio id="musica" src="thoseeyes.mp3" preload="auto" loop></audio>
 
 <script>
-  // Tenta tocar a música automaticamente ao carregar a página
-  window.addEventListener("DOMContentLoaded", () => {
-    const musica = document.getElementById("musica");
+  const musica = document.getElementById("musica");
 
-    // Em navegadores modernos, precisa de interação. Mas tentamos assim mesmo:
-    musica.volume = 0.5; // volume mais suave
-    musica.play().catch((e) => {
-      console.log("A música será iniciada quando houver interação com a página.");
-    });
+  // Tocar ao primeiro toque na página (qualquer lugar)
+  window.addEventListener("click", () => {
+    musica.volume = 0.5;
+    musica.play().catch(() => {});
+  }, { once: true });
+
+  // Tocar assim que possível após carregar
+  window.addEventListener("DOMContentLoaded", () => {
+    musica.play().catch(() => {});
   });
 </script>
+
 
 <html lang="pt-BR">
 <head>
